@@ -1,110 +1,26 @@
-// =========================================================
-// MAHMUDUL AREFIN RAFI - PORTFOLIO INTERACTIONS
-// =========================================================
-
+// PORTFOLIO INTERACTIONS - FAST / LIGHTWEIGHT
 console.log("Mahmudul Arefin Rafi's Portfolio Loaded Successfully!");
 
-// ---------------------------------------------------------
-// English / Bangla language switch
-// ---------------------------------------------------------
+const bootScreen=document.getElementById("boot-screen");
+const revealBoot=()=>bootScreen&&bootScreen.classList.add("loaded");
+if(bootScreen){window.addEventListener("load",()=>setTimeout(revealBoot,250),{once:true});setTimeout(revealBoot,900)}
 
-const languageToggle = document.getElementById("languageToggle");
-const translatableElements = document.querySelectorAll("[data-en][data-bn]");
+const languageToggle=document.getElementById("languageToggle");
+const translatableElements=document.querySelectorAll("[data-en][data-bn]");
+function setLanguage(language){const bn=language==="bn";document.documentElement.lang=bn?"bn":"en";document.body.classList.toggle("bn-mode",bn);translatableElements.forEach(el=>el.textContent=bn?el.dataset.bn:el.dataset.en);if(languageToggle){languageToggle.querySelectorAll("span").forEach(s=>s.classList.remove("active"));const active=languageToggle.querySelector(bn?"span:last-of-type":"span:first-of-type");if(active)active.classList.add("active")}localStorage.setItem("portfolioLanguage",language)}
+setLanguage(localStorage.getItem("portfolioLanguage")||"en");
+if(languageToggle)languageToggle.addEventListener("click",()=>setLanguage(document.body.classList.contains("bn-mode")?"en":"bn"));
 
-function setLanguage(language) {
-    const isBangla = language === "bn";
-    document.documentElement.lang = isBangla ? "bn" : "en";
-    document.body.classList.toggle("bn-mode", isBangla);
+const themeButton=document.getElementById("themeButton"),themeMenu=document.getElementById("themeMenu"),themeLabel=document.getElementById("themeLabel"),themeChoices=document.querySelectorAll(".theme-choice");
+const themeNames={dark:"DARK",light:"LIGHT", "theme-purple":"PURPLE", "theme-cyan":"CYAN", "theme-amber":"AMBER"};
+function setTheme(theme){document.body.classList.remove("light","theme-purple","theme-cyan","theme-amber");if(theme!=="dark")document.body.classList.add(theme);if(themeLabel)themeLabel.textContent=themeNames[theme]||"DARK";localStorage.setItem("portfolioTheme",theme)}
+setTheme(localStorage.getItem("portfolioTheme")||"dark");
+if(themeButton&&themeMenu){themeButton.addEventListener("click",e=>{e.stopPropagation();themeMenu.classList.toggle("open")});themeChoices.forEach(c=>c.addEventListener("click",()=>{setTheme(c.dataset.theme||"dark");themeMenu.classList.remove("open")}));document.addEventListener("click",()=>themeMenu.classList.remove("open"))}
 
-    translatableElements.forEach(element => {
-        element.textContent = isBangla ? element.dataset.bn : element.dataset.en;
-    });
+const mobileMenuButton=document.getElementById("mobileMenuButton"),mobileMenu=document.getElementById("mobileMenu");
+if(mobileMenuButton&&mobileMenu){mobileMenuButton.addEventListener("click",e=>{e.stopPropagation();mobileMenu.classList.toggle("open")});mobileMenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobileMenu.classList.remove("open")))}
 
-    if (languageToggle) {
-        languageToggle.querySelectorAll("span").forEach(span => span.classList.remove("active"));
-        const active = languageToggle.querySelector(isBangla ? "span:last-of-type" : "span:first-of-type");
-        if (active) active.classList.add("active");
-        languageToggle.setAttribute("aria-label", isBangla ? "Switch to English" : "বাংলায় পরিবর্তন করুন");
-    }
+document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener("click",function(e){const id=this.getAttribute("href"),target=document.querySelector(id);if(target){e.preventDefault();target.scrollIntoView({behavior:"smooth",block:"start"})}}));
 
-    localStorage.setItem("portfolioLanguage", language);
-}
-
-const savedLanguage = localStorage.getItem("portfolioLanguage") || "en";
-setLanguage(savedLanguage);
-
-if (languageToggle) {
-    languageToggle.addEventListener("click", () => {
-        const nextLanguage = document.body.classList.contains("bn-mode") ? "en" : "bn";
-        setLanguage(nextLanguage);
-    });
-}
-
-// ---------------------------------------------------------
-// Smooth navigation
-// ---------------------------------------------------------
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function (event) {
-        const targetId = this.getAttribute("href");
-        if (targetId === "#") return;
-        const targetSection = document.querySelector(targetId);
-        if (targetSection) {
-            event.preventDefault();
-            targetSection.scrollIntoView({ behavior: "smooth" });
-        }
-    });
-});
-
-// ---------------------------------------------------------
-// Bubble cursor
-// ---------------------------------------------------------
-
-if (window.matchMedia("(pointer: fine)").matches) {
-    const bubble = document.querySelector(".cursor-bubble") || document.createElement("div");
-    const dot = document.querySelector(".cursor-dot") || document.createElement("div");
-    bubble.className = "cursor-bubble";
-    dot.className = "cursor-dot";
-    if (!bubble.parentElement) document.body.appendChild(bubble);
-    if (!dot.parentElement) document.body.appendChild(dot);
-
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let bubbleX = mouseX, bubbleY = mouseY;
-
-    const moveCursor = () => {
-        bubbleX += (mouseX - bubbleX) * 0.16;
-        bubbleY += (mouseY - bubbleY) * 0.16;
-        bubble.style.left = `${bubbleX}px`;
-        bubble.style.top = `${bubbleY}px`;
-        dot.style.left = `${mouseX}px`;
-        dot.style.top = `${mouseY}px`;
-        requestAnimationFrame(moveCursor);
-    };
-    moveCursor();
-
-    window.addEventListener("mousemove", event => {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-        bubble.style.opacity = "1";
-        dot.style.opacity = "1";
-        document.documentElement.style.setProperty("--mouse-x", `${mouseX}px`);
-        document.documentElement.style.setProperty("--mouse-y", `${mouseY}px`);
-    });
-
-    document.querySelectorAll("a, button, .skill-card, .project-card").forEach(element => {
-        element.addEventListener("mouseenter", () => bubble.classList.add("hovering"));
-        element.addEventListener("mouseleave", () => bubble.classList.remove("hovering"));
-    });
-
-    window.addEventListener("click", event => {
-        const ripple = document.createElement("div");
-        ripple.className = "cursor-ripple";
-        ripple.style.left = `${event.clientX}px`;
-        ripple.style.top = `${event.clientY}px`;
-        document.body.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 700);
-    });
-
-    document.addEventListener("mouseleave", () => { bubble.style.opacity = "0"; dot.style.opacity = "0"; });
-    document.addEventListener("mouseenter", () => { bubble.style.opacity = "1"; dot.style.opacity = "1"; });
-}
+// Cursor is desktop-only and uses one requestAnimationFrame loop.
+if(window.matchMedia("(pointer:fine)").matches){const bubble=document.querySelector(".cursor-bubble")||document.createElement("div"),dot=document.querySelector(".cursor-dot")||document.createElement("div");bubble.className="cursor-bubble";dot.className="cursor-dot";if(!bubble.parentElement)document.body.appendChild(bubble);if(!dot.parentElement)document.body.appendChild(dot);let mx=innerWidth/2,my=innerHeight/2,bx=mx,by=my,running=true;function tick(){if(!running)return;bx+=(mx-bx)*.18;by+=(my-by)*.18;bubble.style.transform=`translate3d(${bx}px,${by}px,0) translate(-50%,-50%)`;dot.style.transform=`translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;requestAnimationFrame(tick)}tick();addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;bubble.style.opacity=1;dot.style.opacity=1},{passive:true});document.querySelectorAll("a,button,.skill-card,.project-card").forEach(el=>{el.addEventListener("mouseenter",()=>bubble.classList.add("hovering"));el.addEventListener("mouseleave",()=>bubble.classList.remove("hovering"))});addEventListener("click",e=>{const r=document.createElement("div");r.className="cursor-ripple";r.style.left=e.clientX+"px";r.style.top=e.clientY+"px";document.body.appendChild(r);setTimeout(()=>r.remove(),500)});addEventListener("pagehide",()=>running=false)}
