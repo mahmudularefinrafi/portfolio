@@ -48,3 +48,30 @@ if(projectGrid&&!document.querySelector("[data-extra-projects]")){
  });
  projectGrid.appendChild(fragment);
 }
+
+/* PROJECT WEBSITE PREVIEW COVERS */
+(()=>{
+ const style=document.createElement('style');
+ style.textContent=`
+ .project-image.website-preview{position:relative!important;overflow:hidden!important;height:230px!important;min-height:230px!important;background:#0a1018!important;border:1px solid rgba(67,245,160,.12)!important;border-radius:12px!important}
+ .project-image.website-preview>span{display:none!important}
+ .project-image.website-preview .preview-label{position:absolute;top:9px;left:9px;z-index:4;padding:4px 7px;border:1px solid rgba(67,245,160,.28);border-radius:5px;background:rgba(2,8,12,.82);color:var(--neon,#43f5a0);font:700 8px monospace;letter-spacing:1px}
+ .project-image.website-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;background:#fff;transition:transform .45s ease,filter .3s ease}
+ .project-image.website-preview:after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.18))}
+ .project-card:hover .project-image.website-preview img{transform:scale(1.03)}
+ @media(max-width:680px){.project-image.website-preview{height:190px!important;min-height:190px!important}}
+ `;
+ document.head.appendChild(style);
+ document.querySelectorAll('#projects .project-card').forEach(card=>{
+   const link=card.querySelector('.project-link');
+   const image=card.querySelector('.project-image');
+   if(!link||!image)return;
+   image.classList.add('website-preview');
+   const label=document.createElement('div');label.className='preview-label';label.textContent='PROJECT PREVIEW';image.appendChild(label);
+   const img=document.createElement('img');
+   img.alt=(card.querySelector('h3')?.textContent||'Project')+' website preview';
+   img.loading='lazy';
+   img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+link.href;
+   image.appendChild(img);
+ });
+})();
