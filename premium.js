@@ -22,13 +22,13 @@ const previewStyle=document.createElement('style');previewStyle.textContent=`
 @media(max-width:680px){.project-image.live-preview{height:190px!important;min-height:190px!important}.project-image.live-preview:before{font-size:7px}}
 `;document.head.appendChild(previewStyle);
 const cards=[...document.querySelectorAll('#projects .project-card')];
-cards.forEach((card,i)=>{
+cards.forEach(card=>{
  const link=card.querySelector('.project-link'),image=card.querySelector('.project-image');
  if(!link||!image)return;
  image.className='project-image live-preview';
  image.innerHTML='<div class="preview-loader">GENERATING PROJECT PREVIEW...</div>';
  const img=document.createElement('img');
- img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+encodeURIComponent(link.href).replace(/%3A/g,':').replace(/%2F/g,'/');
+ img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+link.href;
  img.alt=(card.querySelector('h3')?.textContent||'Project')+' preview';
  img.loading='lazy';
  img.addEventListener('load',()=>image.classList.add('loaded'),{once:true});
