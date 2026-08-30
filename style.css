@@ -478,22 +478,3 @@ footer {
     }
 }
 
-/* =========================
-   SCROLL ANIMATION
-========================= */
-
-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-section.show-section {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#home {
-    opacity: 1;
-    transform: translateY(0);
-}
