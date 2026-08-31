@@ -31,8 +31,16 @@
   .project-card h3{font-size:18px;padding:16px 16px 7px;line-height:1.4}
   .project-card p{padding:0 16px 18px;font-size:13px;line-height:1.65}
   .project-link{display:inline-block;margin:0 16px 18px}
+
+  /* Critical mobile fix: the Projects section was inheriting the global reveal animation. */
+  #projects,#projects.reveal,#projects.reveal-left,#projects.reveal-right{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important}
+  #projects .projects-container,#projects .project-card{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important}
+  #projects .projects-container{display:grid!important;grid-template-columns:1fr!important}
+
   .project-card.reveal,.project-card.reveal-left,.project-card.reveal-right,.skill-card.reveal,.skill-card.reveal-left,.skill-card.reveal-right,.about-content.reveal,.about-content.reveal-left,.about-content.reveal-right,.education-card.reveal,.education-card.reveal-left,.education-card.reveal-right{opacity:1!important;transform:none!important}
   .project-image,.project-image.live-preview{height:185px!important;min-height:185px!important;width:100%;border-radius:14px 14px 0 0}
+
+  /* Always show a useful project preview on mobile. */
   .project-image.live-preview img{display:none!important}
   .project-image.live-preview .preview-status{display:flex!important;background:radial-gradient(circle at 35% 25%,rgba(105,170,255,.16),transparent 45%),linear-gradient(135deg,#0d1830,#171333);color:#72b7ff;font:800 10px 'Manrope',sans-serif;letter-spacing:1.5px}
   .project-image.live-preview.loaded .preview-status{display:flex!important}
