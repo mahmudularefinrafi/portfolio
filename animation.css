@@ -1,0 +1,23 @@
+/* Premium motion layer: isolated so existing UI stays untouched */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:no-preference){
+  .reveal,.reveal-left,.reveal-right{opacity:0;transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}
+  .reveal{transform:translateY(38px)}
+  .reveal-left{transform:translateX(-42px)}
+  .reveal-right{transform:translateX(42px)}
+  .reveal.revealed,.reveal-left.revealed,.reveal-right.revealed{opacity:1;transform:none}
+  .reveal:nth-child(2),.reveal-left:nth-child(2),.reveal-right:nth-child(2){transition-delay:.08s}
+  .reveal:nth-child(3),.reveal-left:nth-child(3),.reveal-right:nth-child(3){transition-delay:.16s}
+  .reveal:nth-child(4),.reveal-left:nth-child(4),.reveal-right:nth-child(4){transition-delay:.24s}
+  .hero-image img{animation:heroFloat 5s ease-in-out infinite}
+  @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .hero h1,.section-title h2{background:linear-gradient(110deg,#fff 15%,#8fc7ff 48%,#a77dff 72%,#fff 95%);background-size:240% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientFlow 7s linear infinite}
+  @keyframes gradientFlow{to{background-position:240% center}}
+  .btn{position:relative;overflow:hidden}
+  .btn:after{content:"";position:absolute;inset:-80% -30%;background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.24) 50%,transparent 58%);transform:translateX(-70%) rotate(8deg);transition:transform .65s ease;pointer-events:none}
+  .btn:hover:after{transform:translateX(70%) rotate(8deg)}
+  .project-card,.skill-card,.education-card,.about-content{will-change:transform}
+  .project-card,.skill-card,.education-card{transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s ease,box-shadow .35s ease}
+  .project-card:hover,.skill-card:hover,.education-card:hover{transform:translateY(-9px)}
+}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}.hero-image img{animation:none!important}.hero h1,.section-title h2{animation:none!important}}
