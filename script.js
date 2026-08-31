@@ -1,13 +1,14 @@
 (()=>{
 'use strict';
-const cursorScript=document.createElement('script');cursorScript.src='cursor-effects.js?v=1';cursorScript.defer=true;document.head.appendChild(cursorScript);
+const cursorScript=document.createElement('script');cursorScript.src='cursor-effects.js?v=2';cursorScript.defer=true;document.head.appendChild(cursorScript);
 const year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
-const langBtn=document.getElementById('languageToggle');
-function setLanguage(lang){document.querySelectorAll('[data-en][data-bn]').forEach(el=>{el.textContent=lang==='bn'?el.dataset.bn:el.dataset.en});document.documentElement.lang=lang==='bn'?'bn':'en';if(langBtn)langBtn.textContent=lang==='bn'?'বাংলা / EN':'EN / বাংলা';localStorage.setItem('portfolio-language',lang);localStorage.setItem('portfolio-lang',lang)}
+const langBtn=document.getElementById('languageToggle'),themeBtn=document.getElementById('themeButton');
+function setLanguage(lang){document.querySelectorAll('[data-en][data-bn]').forEach(el=>el.textContent=lang==='bn'?el.dataset.bn:el.dataset.en);document.documentElement.lang=lang==='bn'?'bn':'en';if(langBtn)langBtn.textContent=lang==='bn'?'বাংলা / EN':'EN / বাংলা';localStorage.setItem('portfolio-language',lang);localStorage.setItem('portfolio-lang',lang)}
 setLanguage(localStorage.getItem('portfolio-language')||localStorage.getItem('portfolio-lang')||'en');
-if(langBtn)langBtn.addEventListener('click',()=>setLanguage((localStorage.getItem('portfolio-language')||'en')==='en'?'bn':'en'));
-const navLinks=document.querySelector('.nav-links'),menuBtn=document.getElementById('mobileMenuButton');
-if(navLinks&&menuBtn){menuBtn.addEventListener('click',()=>navLinks.classList.toggle('show'));navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('show')))}
-const previewStyle=document.createElement('style');previewStyle.textContent=`.project-image.live-preview{position:relative!important;height:220px!important;min-height:220px!important;overflow:hidden!important;background:#071018!important;border-radius:14px}.project-image.live-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}.project-image.live-preview .preview-loader{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;background:#071018;color:#7890a0;font:600 10px monospace;letter-spacing:1px}.project-image.live-preview.loaded .preview-loader{display:none}@media(max-width:680px){.project-image.live-preview{height:190px!important;min-height:190px!important}}`;document.head.appendChild(previewStyle);
-document.querySelectorAll('#projects .project-card').forEach(card=>{const link=card.querySelector('.project-link'),image=card.querySelector('.project-image');if(!link||!image)return;image.className='project-image live-preview';image.innerHTML='<div class="preview-loader">LOADING PREVIEW...</div>';const img=document.createElement('img');img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+encodeURIComponent(link.href);img.alt=(card.querySelector('h3')?.textContent||'Project')+' preview';img.loading='lazy';img.onload=()=>image.classList.add('loaded');img.onerror=()=>{const loader=image.querySelector('.preview-loader');if(loader)loader.textContent='PREVIEW UNAVAILABLE'};image.appendChild(img)});
+if(langBtn)langBtn.addEventListener('click',()=>setLanguage((localStorage.getItem('portfolio-language')||localStorage.getItem('portfolio-lang')||'en')==='en'?'bn':'en'));
+const themes=['dark','purple','cyan','amber','midnight'];let theme=localStorage.getItem('portfolio-theme')||'dark';
+function setTheme(t){theme=t;document.body.classList.remove('light','theme-purple','theme-cyan','theme-amber','theme-midnight');if(t!=='dark')document.body.classList.add('theme-'+t);if(themeBtn)themeBtn.textContent=t==='dark'?'DARK':t.toUpperCase();localStorage.setItem('portfolio-theme',t)}
+setTheme(theme);
+if(themeBtn){themeBtn.addEventListener('click',()=>{const i=themes.indexOf(theme);setTheme(themes[(i+1)%themes.length])});themeBtn.title='Click to switch dark themes'}
+const navLinks=document.querySelector('.nav-links'),menuBtn=document.getElementById('mobileMenuButton');if(navLinks&&menuBtn){menuBtn.addEventListener('click',()=>navLinks.classList.toggle('show'));navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('show')))}
 })();
