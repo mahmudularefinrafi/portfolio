@@ -1,0 +1,57 @@
+/* Mobile responsiveness layer. Additive only, keeps the existing desktop UI intact. */
+@media (max-width: 680px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  section{width:100%;padding-left:5%;padding-right:5%}
+  header{padding:8px 0!important}
+  nav{width:calc(100% - 16px);height:58px;padding:0 10px;border-radius:16px;gap:7px}
+  .logo{font-size:20px}
+  .nav-tools{gap:5px;margin-left:auto}
+  .tool-btn{height:34px;min-width:34px;padding:0 7px;font-size:9px}
+  .mobile-menu-btn{display:inline-flex!important}
+  .nav-links.show{display:flex!important;max-height:calc(100vh - 82px);overflow:auto}
+  .hero{min-height:auto;padding:115px 5% 70px;gap:30px}
+  .hero-text{width:100%}
+  .hero h1{font-size:clamp(38px,11vw,52px);line-height:1.05;letter-spacing:-2px;overflow-wrap:anywhere}
+  .hero h2{font-size:18px;line-height:1.45}
+  .hero-text>p:last-of-type{font-size:15px;line-height:1.7}
+  .hero-image{width:min(330px,88vw)!important;max-width:none!important}
+  .hero-image img{width:min(280px,82vw)!important;height:auto!important;aspect-ratio:330/420;max-height:none!important}
+  .buttons{width:100%;gap:10px}
+  .btn{width:100%;min-width:0;padding:13px 16px}
+  .section-title{margin-bottom:34px}
+  .section-title h2{font-size:clamp(32px,9vw,44px);line-height:1.15;letter-spacing:-1px}
+  .section-title p{font-size:11px}
+  .about-content,.education-card{width:100%;padding:22px 18px;border-radius:18px}
+  .about-content p{font-size:15px;line-height:1.75}
+  .education-card h3{font-size:19px;line-height:1.5}
+  .skills-container,.projects-container{width:100%;grid-template-columns:1fr!important;gap:14px}
+  .skill-card,.project-card{width:100%;min-width:0}
+  .skill-card{padding:22px 18px}
+  .project-card{border-radius:18px}
+  .project-card h3{font-size:18px;padding:16px 16px 7px;line-height:1.4}
+  .project-card p{padding:0 16px 18px;font-size:13px;line-height:1.65}
+  .project-link{display:inline-block;margin:0 16px 18px}
+  .project-card.reveal,.project-card.reveal-left,.project-card.reveal-right,.skill-card.reveal,.skill-card.reveal-left,.skill-card.reveal-right,.about-content.reveal,.about-content.reveal-left,.about-content.reveal-right,.education-card.reveal,.education-card.reveal-left,.education-card.reveal-right{opacity:1!important;transform:none!important}
+  .project-image,.project-image.live-preview{height:185px!important;min-height:185px!important;width:100%;border-radius:14px 14px 0 0}
+  .project-image.live-preview img{display:none!important}
+  .project-image.live-preview .preview-status{display:flex!important;background:radial-gradient(circle at 35% 25%,rgba(105,170,255,.16),transparent 45%),linear-gradient(135deg,#0d1830,#171333);color:#72b7ff;font:800 10px 'Manrope',sans-serif;letter-spacing:1.5px}
+  .project-image.live-preview.loaded .preview-status{display:flex!important}
+  .project-preview-actions{padding:0 14px 14px!important;gap:7px}
+  .project-preview-actions a{min-height:40px;font-size:10px}
+  .contact-content{width:100%}
+  .contact-form-wrap{width:100%;margin-top:22px}
+  .contact-form-wrap .contact-form{padding:20px 16px;border-radius:18px}
+  .contact-form-grid{grid-template-columns:1fr!important;gap:14px}
+  .contact-form-wrap input,.contact-form-wrap textarea{font-size:16px}
+  .contact-form-wrap button.btn{width:100%;align-self:stretch}
+  .social-links{gap:8px}
+  .social-links a{width:100%;text-align:center;padding:11px 14px}
+  footer{padding:28px 16px;font-size:12px}
+}
+@media (min-width:681px) and (max-width:950px){
+  .projects-container{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .skills-container{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media (prefers-reduced-motion: reduce){
+  .project-card,.skill-card,.about-content,.education-card,.hero-image,.btn{transition:none!important;animation:none!important}
+}
