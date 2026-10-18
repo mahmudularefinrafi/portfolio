@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mahmudularefinrafi.github.io/portfolio/sitemap.xml
+Sitemap: https://mahmudularefinrafi.iam.bd/sitemap.xml
