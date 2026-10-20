@@ -18,7 +18,7 @@ function deferPreview(img,url){
  if(previewObserver)previewObserver.observe(img);else img.src=img.dataset.previewSrc;
 }
 const style=document.createElement('style');style.textContent=`
-#projects .project-image.live-preview{position:relative!important;height:220px!important;min-height:220px!important;overflow:hidden!important;background:#071018!important;border-radius:14px!important}
+#projects .project-image.live-preview{position:relative!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;overflow:hidden!important;background:#101d39!important;border-radius:14px!important}
 #projects .project-image.live-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;border:0}
 #projects .project-image.live-preview .preview-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#071018;color:#8ea1b4;font:700 10px monospace;letter-spacing:1px;z-index:1}
 #projects .project-image.live-preview.loaded .preview-status{display:none}
@@ -27,7 +27,7 @@ const style=document.createElement('style');style.textContent=`
 #projects .project-preview-actions a{display:inline-flex;align-items:center;justify-content:center;flex:1;min-height:38px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);color:#dce4f1;font:700 11px monospace;text-decoration:none;transition:.2s}
 #projects .project-preview-actions a:first-child{color:var(--accent,#72b7ff);border-color:rgba(114,183,255,.28)}
 #projects .project-preview-actions a:hover{transform:translateY(-2px);background:rgba(114,183,255,.09)}
-@media(max-width:680px){#projects .project-image.live-preview{height:185px!important;min-height:185px!important}#projects .project-preview-actions{padding:0 14px 14px}}
+@media(max-width:680px){#projects .project-image.live-preview{height:auto!important;min-height:0!important;aspect-ratio:16/9!important}#projects .project-preview-actions{padding:0 14px 14px}}
 `;document.head.appendChild(style);
 
 if(grid){
@@ -48,7 +48,7 @@ grid.querySelectorAll('.project-card').forEach(card=>{
  img.onerror=()=>{
   image.classList.add('error');
   const status=image.querySelector('.preview-status');
-  if(status)status.textContent='Preview unavailable — open the live project below';
+  if(status)status.textContent='LIVE PREVIEW UNAVAILABLE · '+title;
  };
  image.appendChild(img);
  if(!card.querySelector('.project-preview-actions')){
@@ -75,7 +75,7 @@ if(featuredGrid){
  const featuredStyle=document.createElement('style');
  featuredStyle.textContent=`
  #featured-projects .featured-card{overflow:hidden;padding:0;gap:0}
- #featured-projects .featured-preview{position:relative;height:190px;min-height:190px;overflow:hidden;background:linear-gradient(135deg,#101d39,#292052);border-bottom:1px solid rgba(150,190,255,.16)}
+ #featured-projects .featured-preview{position:relative;width:100%;height:auto;min-height:0;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#101d39,#292052);border-bottom:1px solid rgba(150,190,255,.16)}
  #featured-projects .featured-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .45s ease}
  #featured-projects .featured-card:hover .featured-preview img{transform:scale(1.035)}
  #featured-projects .featured-preview-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;color:#c8d8f0;font:700 10px monospace;letter-spacing:1.2px;background:radial-gradient(circle at 50% 25%,rgba(114,183,255,.2),transparent 48%),linear-gradient(135deg,#101d39,#292052)}
@@ -85,7 +85,7 @@ if(featuredGrid){
  #featured-projects .featured-top{margin-bottom:0}
  #featured-projects .featured-link{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;min-height:42px;padding:10px 14px;border:1px solid rgba(117,190,255,.4);border-radius:12px;background:rgba(72,139,255,.1);transition:transform .22s,border-color .22s,background .22s}
  #featured-projects .featured-link:hover{transform:translateY(-2px);border-color:rgba(117,210,255,.85);background:rgba(72,139,255,.2);text-decoration:none}
- @media(max-width:540px){#featured-projects .featured-preview{height:180px;min-height:180px}#featured-projects .featured-content{padding:19px}}
+ @media(max-width:540px){#featured-projects .featured-preview{height:auto;min-height:0;aspect-ratio:16/9}#featured-projects .featured-content{padding:19px}}
  @media(prefers-reduced-motion:reduce){#featured-projects .featured-preview img,#featured-projects .featured-link{transition:none}}
  `;
  document.head.appendChild(featuredStyle);
@@ -102,7 +102,7 @@ if(featuredGrid){
   img.loading='lazy';img.decoding='async';
   deferPreview(img,url);
   img.onload=()=>preview.classList.add('loaded');
-  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s)s.textContent='PREVIEW UNAVAILABLE — OPEN PROJECT';};
+  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s)s.textContent='PREVIEW UNAVAILABLE · '+title;};
   preview.appendChild(img);
   const content=document.createElement('div');
   content.className='featured-content';
@@ -118,7 +118,7 @@ if(bookGrid){
  bookStyle.textContent=`
  #books .project-card{position:relative;display:flex;flex-direction:column;min-height:100%;cursor:pointer;border:1px solid rgba(133,177,255,.24);background:linear-gradient(145deg,rgba(18,29,54,.92),rgba(8,13,27,.94));box-shadow:0 18px 45px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05);transition:transform .3s,border-color .3s,box-shadow .3s}
  #books .project-card:hover{transform:translateY(-8px);border-color:rgba(100,190,255,.68);box-shadow:0 24px 65px rgba(30,110,220,.17),0 0 0 1px rgba(100,190,255,.12)}
- #books .project-image.book-live-preview{height:250px!important;min-height:250px!important;position:relative;overflow:hidden;background:linear-gradient(135deg,#101d39,#292052)!important;border-bottom:1px solid rgba(150,190,255,.18)}
+ #books .project-image.book-live-preview{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:3/2!important;position:relative;overflow:hidden;background:linear-gradient(135deg,#101d39,#292052)!important;border-bottom:1px solid rgba(150,190,255,.18)}
  #books .project-image.book-live-preview:after{content:' ';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(3,7,17,.03),rgba(3,7,17,.18))}
  #books .project-image.book-live-preview img{width:100%;height:100%;display:block;object-fit:cover;object-position:top center;transition:transform .6s,filter .6s}
  #books .project-card:hover .project-image.book-live-preview img{transform:scale(1.035);filter:saturate(1.08)}
@@ -145,7 +145,7 @@ if(bookGrid){
  #books .project-card .project-link:after{content:'↗';font-family:Arial,sans-serif}
  #books .project-card .project-link:hover{transform:translateY(-2px);border-color:rgba(117,210,255,.85);background:linear-gradient(135deg,rgba(72,139,255,.32),rgba(129,93,255,.28))}
  #books .project-card:focus-visible{outline:2px solid #83d7ff;outline-offset:4px}
- @media(max-width:680px){#books .project-image.book-live-preview{height:220px!important;min-height:220px!important}#books .project-card h3{padding:20px 18px 8px}#books .project-card p{padding:0 18px 16px}#books .project-card .project-link{width:calc(100% - 36px);margin:0 18px 18px;min-height:46px}}
+ @media(max-width:680px){#books .project-image.book-live-preview{height:auto!important;min-height:0!important;aspect-ratio:3/2!important}#books .project-card h3{padding:20px 18px 8px}#books .project-card p{padding:0 18px 16px}#books .project-card .project-link{width:calc(100% - 36px);margin:0 18px 18px;min-height:46px}}
  @media(prefers-reduced-motion:reduce){#books .project-card,#books .project-image.book-live-preview img,#books .project-card .project-link{transition:none}}
  `;
  document.head.appendChild(bookStyle);
@@ -167,7 +167,7 @@ if(bookGrid){
   img.alt=(card.querySelector('h3')?.textContent||'Book')+' website preview';
   img.loading='lazy';
   img.onload=()=>preview.classList.add('loaded');
-  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.book-preview-status');if(s)s.textContent='WEBSITE PREVIEW UNAVAILABLE';};
+  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.book-preview-status');if(s)s.textContent='BOOK COVER PREVIEW · '+title;};
   preview.appendChild(img);
   card.setAttribute('role','link');
   card.setAttribute('tabindex','0');
