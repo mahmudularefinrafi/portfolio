@@ -202,3 +202,9 @@
  #featured-projects .featured-card:nth-child(2),#featured-projects .featured-card:nth-child(3){display:flex}
  #featured-projects .featured-card:nth-child(2) .featured-preview,#featured-projects .featured-card:nth-child(3) .featured-preview{height:180px;min-height:180px;border-right:0;border-bottom:1px solid rgba(150,190,255,.16)}
 }
+
+/* Final layout fix: never squeeze featured screenshots into half-width columns. */
+#featured-projects .featured-card:nth-child(2),#featured-projects .featured-card:nth-child(3){display:flex!important;grid-template-columns:none!important;align-items:stretch!important}
+#featured-projects .featured-card:nth-child(2) .featured-preview,#featured-projects .featured-card:nth-child(3) .featured-preview{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;border-right:0!important;border-bottom:1px solid rgba(150,190,255,.16)!important}
+#featured-projects .featured-card .featured-preview img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:top center!important}
+#projects .project-image.live-preview .preview-status,#featured-projects .featured-preview-status{overflow-wrap:anywhere;text-align:center}
