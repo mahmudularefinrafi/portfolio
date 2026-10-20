@@ -14,7 +14,7 @@ const previewObserver=('IntersectionObserver' in window)?new IntersectionObserve
 },{rootMargin:'320px 0px',threshold:0.01}):null;
 function deferPreview(img,url){
  const width=window.matchMedia('(max-width: 680px)').matches?800:1100;
- img.dataset.previewSrc='https://image.thum.io/get/width/'+width+'/crop/700/noanimate/'+url;
+ img.dataset.previewSrc='https://image.thum.io/get/width/'+width+'/noanimate/'+url;
  if(previewObserver)previewObserver.observe(img);else img.src=img.dataset.previewSrc;
 }
 const style=document.createElement('style');style.textContent=`
