@@ -48,7 +48,7 @@ grid.querySelectorAll('.project-card').forEach(card=>{
  img.onerror=()=>{
   image.classList.add('error');
   const status=image.querySelector('.preview-status');
-  if(status)status.textContent='LIVE PREVIEW UNAVAILABLE · '+title;
+  if(status){status.textContent='';status.classList.add('preview-fallback');status.innerHTML='<span class="fallback-kicker">PROJECT PREVIEW</span><strong></strong><span class="fallback-caption">Open the live website to explore</span>';status.querySelector('strong').textContent=title;}
  };
  image.appendChild(img);
  if(!card.querySelector('.project-preview-actions')){
@@ -103,7 +103,7 @@ if(featuredGrid){
   img.loading='lazy';img.decoding='async';
   deferPreview(img,previewUrl);
   img.onload=()=>preview.classList.add('loaded');
-  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s)s.textContent='PREVIEW UNAVAILABLE · '+title;};
+  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s){s.textContent='';s.classList.add('preview-fallback');s.innerHTML='<span class="fallback-kicker">PROJECT PREVIEW</span><strong></strong><span class="fallback-caption">Open the live website to explore</span>';s.querySelector('strong').textContent=title;}};
   preview.appendChild(img);
   const content=document.createElement('div');
   content.className='featured-content';
@@ -168,7 +168,7 @@ if(bookGrid){
   img.alt=(card.querySelector('h3')?.textContent||'Book')+' website preview';
   img.loading='lazy';
   img.onload=()=>preview.classList.add('loaded');
-  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.book-preview-status');if(s)s.textContent='BOOK COVER PREVIEW · '+title;};
+  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.book-preview-status');if(s){s.textContent='';s.classList.add('preview-fallback');s.innerHTML='<span class="fallback-kicker">BOOK PREVIEW</span><strong></strong><span class="fallback-caption">Select Read Book to open</span>';s.querySelector('strong').textContent=title;}};
   preview.appendChild(img);
   card.setAttribute('role','link');
   card.setAttribute('tabindex','0');
