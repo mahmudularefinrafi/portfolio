@@ -63,3 +63,55 @@
 @media (prefers-reduced-motion: reduce){
   .project-card,.skill-card,.about-content,.education-card,.hero-image,.btn{transition:none!important;animation:none!important}
 }
+
+/* Navigation fix: keep mobile links inside a real dropdown, never as a clipped horizontal row. */
+@media (max-width: 1050px) {
+  header nav { position: relative !important; overflow: visible !important; }
+  header nav ul.nav-links { display: none !important; }
+  header nav ul.nav-links.show {
+    display: flex !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    left: auto !important;
+    width: min(280px, calc(100vw - 32px)) !important;
+    max-height: calc(100dvh - 110px) !important;
+    overflow-y: auto !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    border: 1px solid rgba(114,183,255,.28) !important;
+    border-radius: 16px !important;
+    background: rgba(5,10,22,.98) !important;
+    box-shadow: 0 18px 48px rgba(0,0,0,.48) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    z-index: 1100 !important;
+  }
+  header nav ul.nav-links.show li {
+    display: block !important;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+  header nav ul.nav-links.show a {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 10px 12px !important;
+    white-space: normal !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+  header nav ul.nav-links.show a::before { flex: 0 0 auto; }
+}
+@media (max-width: 380px) {
+  header nav { gap: 5px !important; padding-left: 9px !important; padding-right: 8px !important; }
+  header nav .logo { font-size: 18px !important; }
+  header nav .nav-tools { gap: 4px !important; }
+  header nav .tool-btn { min-width: 31px !important; padding-left: 5px !important; padding-right: 5px !important; font-size: 8px !important; }
+}
