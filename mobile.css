@@ -15,7 +15,7 @@
   .hero h2{font-size:18px;line-height:1.45}
   .hero-text>p:last-of-type{font-size:15px;line-height:1.7}
   .hero-image{width:min(330px,88vw)!important;max-width:none!important}
-  .hero-image img{width:min(280px,82vw)!important;height:auto!important;aspect-ratio:330/420;max-height:none!important}
+  .hero-image img{width:min(260px,78vw)!important;height:auto!important;aspect-ratio:330/420;max-height:none!important}
   .buttons{width:100%;gap:10px}
   .btn{width:100%;min-width:0;padding:13px 16px}
   .section-title{margin-bottom:34px}
