@@ -208,3 +208,12 @@
 #featured-projects .featured-card:nth-child(2) .featured-preview,#featured-projects .featured-card:nth-child(3) .featured-preview{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;border-right:0!important;border-bottom:1px solid rgba(150,190,255,.16)!important}
 #featured-projects .featured-card .featured-preview img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:top center!important}
 #projects .project-image.live-preview .preview-status,#featured-projects .featured-preview-status{overflow-wrap:anywhere;text-align:center}
+
+/* Graceful branded fallback when external screenshot services block a preview */
+.preview-fallback{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px!important;text-align:center!important;overflow:hidden;background:radial-gradient(circle at 50% 0%,rgba(114,183,255,.22),transparent 55%),linear-gradient(145deg,#111e37,#090f1c)!important;color:#d9e9ff!important}
+.preview-fallback .fallback-kicker{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#82caff}
+.preview-fallback strong{font:700 clamp(20px,2.3vw,30px)/1.25 'Manrope','Hind Siliguri',sans-serif;color:#f6f8ff;overflow-wrap:anywhere}
+.preview-fallback .fallback-caption{font-size:12px;color:#a7b6ce;line-height:1.6}
+#featured-projects .featured-preview.preview-fallback{aspect-ratio:16/9}
+#projects .project-image.live-preview .preview-fallback{height:100%}
+#books .project-image.book-live-preview .preview-fallback{height:100%}
