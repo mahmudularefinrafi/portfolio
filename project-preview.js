@@ -2,7 +2,6 @@
 'use strict';
 const grid=document.querySelector('#projects .projects-container');
 if(!grid)return;
-const isMobile=window.matchMedia('(max-width:680px)').matches;
 const style=document.createElement('style');style.textContent=`
 #projects .project-image.live-preview{position:relative!important;height:220px!important;min-height:220px!important;overflow:hidden!important;background:#071018!important;border-radius:14px!important}
 #projects .project-image.live-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;border:0}
@@ -14,33 +13,39 @@ const style=document.createElement('style');style.textContent=`
 #projects .project-preview-actions a:first-child{color:var(--accent,#72b7ff);border-color:rgba(114,183,255,.28)}
 #projects .project-preview-actions a:hover{transform:translateY(-2px);background:rgba(114,183,255,.09)}
 @media(max-width:680px){#projects .project-image.live-preview{height:185px!important;min-height:185px!important}#projects .project-preview-actions{padding:0 14px 14px}}
-#projects .project-image.local-demo-preview{height:220px!important;min-height:220px!important;overflow:hidden!important;background:linear-gradient(135deg,#081525,#111e3b 55%,#20163d)!important}
-#projects .local-demo-art{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;height:100%;padding:24px 18px;overflow:hidden;text-align:center;color:#eef5ff;background:radial-gradient(ellipse at 50% 22%,rgba(86,165,255,.23),transparent 48%),linear-gradient(135deg,rgba(7,17,34,.3),rgba(22,17,48,.5))}
-#projects .local-demo-art:before{content:'';position:absolute;inset:12px;border:1px solid rgba(143,190,255,.22);border-radius:12px;pointer-events:none;z-index:-1}
-#projects .local-demo-art:after{content:'';position:absolute;width:155px;height:155px;border-radius:50%;border:1px solid rgba(130,185,255,.12);box-shadow:0 0 0 20px rgba(130,185,255,.035),0 0 0 42px rgba(130,185,255,.025);z-index:-1}
-#projects .local-demo-kicker{font:700 9px 'Manrope',sans-serif;letter-spacing:2.5px;color:#8ddfff}
-#projects .local-demo-mark{font-size:27px;line-height:1;color:#a8cfff;text-shadow:0 0 24px rgba(94,172,255,.5)}
-#projects .local-demo-title{max-width:95%;font:700 clamp(17px,2vw,24px) 'Manrope','Hind Siliguri',sans-serif;line-height:1.35;overflow-wrap:anywhere;text-shadow:0 3px 18px rgba(0,0,0,.3)}
-#projects .local-demo-rule{width:54px;height:2px;background:linear-gradient(90deg,transparent,#8ddfff,transparent)}
-#projects .local-demo-caption{font:600 8px 'Manrope',sans-serif;letter-spacing:2px;color:#9aaecb}
-#projects .local-demo-corner{position:absolute;top:19px;right:20px;padding:5px 8px;border:1px solid rgba(141,223,255,.25);border-radius:999px;background:rgba(5,12,25,.35);color:#9edfff;font:700 8px 'Manrope',sans-serif;letter-spacing:1px}
-@media(max-width:680px){#projects .project-image.local-demo-preview{height:185px!important;min-height:185px!important}#projects .local-demo-title{font-size:20px}}
 `;document.head.appendChild(style);
 
 grid.querySelectorAll('.project-card').forEach(card=>{
  const live=card.querySelector('.project-link');
  const image=card.querySelector('.project-image');
- const heading=card.querySelector('h3');
  if(!live||!image)return;
- const title=heading?.textContent?.trim()||'Project';
- const safeTitle=title.replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
- image.className='project-image live-preview local-demo-preview';
- image.innerHTML='<div class="local-demo-art"><span class="local-demo-kicker">RAFI • PROJECT SHOWCASE</span><span class="local-demo-mark" aria-hidden="true">✦</span><strong class="local-demo-title">'+safeTitle+'</strong><span class="local-demo-rule"></span><span class="local-demo-caption">INTERACTIVE WEB PROJECT</span><span class="local-demo-corner">PREVIEW</span></div>';
+ const url=live.href;
+ const title=card.querySelector('h3')?.textContent?.trim()||'Project';
+ image.className='project-image live-preview';
+ image.innerHTML='<div class="preview-status">LOADING REAL PROJECT PREVIEW...</div>';
+ const img=document.createElement('img');
+ img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+url;
+ img.alt=title+' — real website screenshot';
+ img.loading='lazy';
+ img.decoding='async';
+ img.onload=()=>image.classList.add('loaded');
+ img.onerror=()=>{
+  image.classList.add('error');
+  const status=image.querySelector('.preview-status');
+  if(status)status.textContent='Preview unavailable — open the live project below';
+ };
+ image.appendChild(img);
  if(!card.querySelector('.project-preview-actions')){
-  const actions=document.createElement('div');actions.className='project-preview-actions';
-  const liveBtn=document.createElement('a');liveBtn.href=live.href;liveBtn.target='_blank';liveBtn.rel='noopener noreferrer';liveBtn.textContent='Open Project ↗';
-  const gh=document.createElement('a');gh.href=card.dataset.github||'https://github.com/mahmudularefinrafi';gh.target='_blank';gh.rel='noopener noreferrer';gh.textContent='GitHub ↗';
-  actions.append(liveBtn,gh);card.appendChild(actions);
+  const actions=document.createElement('div');
+  actions.className='project-preview-actions';
+  const liveBtn=document.createElement('a');
+  liveBtn.href=url;liveBtn.target='_blank';liveBtn.rel='noopener noreferrer';
+  liveBtn.textContent='Open Project ↗';
+  const gh=document.createElement('a');
+  gh.href=card.dataset.github||'https://github.com/mahmudularefinrafi';
+  gh.target='_blank';gh.rel='noopener noreferrer';gh.textContent='GitHub ↗';
+  actions.append(liveBtn,gh);
+  card.appendChild(actions);
  }
  live.style.display='none';
 });
