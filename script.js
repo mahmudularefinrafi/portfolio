@@ -3,7 +3,7 @@
 const cursorScript=document.createElement('script');cursorScript.src='cursor-effects.js?v=2';cursorScript.defer=true;document.head.appendChild(cursorScript);
 const year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
 const langBtn=document.getElementById('languageToggle'),themeBtn=document.getElementById('themeButton');
-function setLanguage(lang){document.querySelectorAll('[data-en][data-bn]').forEach(el=>el.textContent=lang==='bn'?el.dataset.bn:el.dataset.en);document.documentElement.lang=lang==='bn'?'bn':'en';if(langBtn)langBtn.textContent=lang==='bn'?'বাংলা / EN':'EN / বাংলা';localStorage.setItem('portfolio-language',lang);localStorage.setItem('portfolio-lang',lang)}
+function setLanguage(lang){document.querySelectorAll('[data-en][data-bn]').forEach(el=>el.textContent=lang==='bn'?el.dataset.bn:el.dataset.en);document.documentElement.lang=lang==='bn'?'bn':'en';document.body.classList.toggle('bn-mode',lang==='bn');if(langBtn)langBtn.textContent=lang==='bn'?'বাংলা / EN':'EN / বাংলা';localStorage.setItem('portfolio-language',lang);localStorage.setItem('portfolio-lang',lang)}
 setLanguage(localStorage.getItem('portfolio-language')||localStorage.getItem('portfolio-lang')||'en');
 if(langBtn)langBtn.addEventListener('click',()=>setLanguage((localStorage.getItem('portfolio-language')||localStorage.getItem('portfolio-lang')||'en')==='en'?'bn':'en'));
 const themes=['dark','purple','cyan','amber','midnight'];let theme=localStorage.getItem('portfolio-theme')||'dark';
