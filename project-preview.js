@@ -8,7 +8,7 @@ const previewObserver=('IntersectionObserver' in window)?new IntersectionObserve
   if(!entry.isIntersecting)return;
   const img=entry.target;
   const src=img.dataset.previewSrc;
-  if(src&&!img.src)img.src=src;
+  if(src&&!img.hasAttribute('src'))img.src=src;
   previewObserver.unobserve(img);
  });
 },{rootMargin:'320px 0px',threshold:0.01}):null;
