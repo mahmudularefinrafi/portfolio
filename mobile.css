@@ -173,3 +173,32 @@
 .featured-link:hover{text-decoration:underline}
 .featured-footer{display:flex;justify-content:center;margin-top:25px}
 @media(max-width:540px){.featured-projects{padding:30px 5% 42px}.featured-grid{grid-template-columns:1fr;gap:13px}.featured-card{padding:21px}.featured-card h3{font-size:20px}}
+
+/* Distinct visual treatments for the homepage destination cards */
+.portal-card:nth-child(1){border-radius:28px 12px 28px 12px;background:linear-gradient(135deg,rgba(114,183,255,.14),rgba(255,255,255,.025))}
+.portal-card:nth-child(2){border-radius:12px 28px 12px 28px;background:linear-gradient(145deg,rgba(155,124,255,.14),rgba(255,255,255,.025))}
+.portal-card:nth-child(3){border-radius:18px;background:linear-gradient(120deg,rgba(87,230,255,.11),rgba(255,255,255,.025));border-style:dashed}
+.portal-card:nth-child(4){border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(114,183,255,.04));box-shadow:inset 0 0 0 1px rgba(114,183,255,.04)}
+.portal-card:nth-child(5){border-radius:12px 12px 28px 28px;background:linear-gradient(145deg,rgba(221,195,130,.11),rgba(255,255,255,.02))}
+.portal-card:nth-child(6){border-radius:28px 28px 12px 12px;background:linear-gradient(145deg,rgba(99,220,170,.1),rgba(255,255,255,.025))}
+.portal-card:nth-child(odd) .portal-index{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid currentColor;border-radius:50%}
+.portal-card:nth-child(even) .portal-index{display:inline-flex;align-items:center;justify-content:center;min-width:52px;height:30px;padding:0 10px;border-radius:8px;background:rgba(255,255,255,.055)}
+.portal-card:nth-child(2){transform:translateY(10px)}
+.portal-card:nth-child(2):hover{transform:translateY(4px)}
+.portal-card:nth-child(5){transform:translateY(10px)}
+.portal-card:nth-child(5):hover{transform:translateY(4px)}
+/* Alternating layouts make featured project previews feel less repetitive */
+#featured-projects .featured-card:nth-child(2),#featured-projects .featured-card:nth-child(3){display:grid;grid-template-columns:40% minmax(0,1fr);align-items:stretch}
+#featured-projects .featured-card:nth-child(2) .featured-preview,#featured-projects .featured-card:nth-child(3) .featured-preview{height:100%;min-height:240px;border-bottom:0;border-right:1px solid rgba(150,190,255,.16)}
+#featured-projects .featured-card:nth-child(2) .featured-content,#featured-projects .featured-card:nth-child(3) .featured-content{padding:22px 20px}
+#featured-projects .featured-card:nth-child(1){border-radius:24px 12px 24px 12px}
+#featured-projects .featured-card:nth-child(2){border-radius:12px 24px 12px 24px}
+#featured-projects .featured-card:nth-child(3){border-radius:24px 12px 24px 12px}
+#featured-projects .featured-card:nth-child(4){border-radius:12px 24px 12px 24px;background:linear-gradient(145deg,rgba(155,124,255,.09),rgba(255,255,255,.018))}
+#featured-projects .featured-card:nth-child(4) .featured-preview{background:linear-gradient(135deg,#211637,#0c2034)}
+@media(max-width:680px){
+ .portal-card:nth-child(2),.portal-card:nth-child(5){transform:none}
+ .portal-card:nth-child(2):hover,.portal-card:nth-child(5):hover{transform:translateY(-3px)}
+ #featured-projects .featured-card:nth-child(2),#featured-projects .featured-card:nth-child(3){display:flex}
+ #featured-projects .featured-card:nth-child(2) .featured-preview,#featured-projects .featured-card:nth-child(3) .featured-preview{height:180px;min-height:180px;border-right:0;border-bottom:1px solid rgba(150,190,255,.16)}
+}
