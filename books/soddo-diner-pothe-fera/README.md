@@ -2,17 +2,9 @@
 
 Responsive Bengali-first book landing page and embedded PDF reader for the Portfolio Books section.
 
-## Required PDF asset
+## PDF asset
 
-Place the author's original 109-page PDF in this directory as `book.pdf`.
-
-The source PDF is not committed by this change because the GitHub text-file connector cannot safely upload binary PDF bytes. Upload the provided PDF using GitHub's web interface:
-1. Open this directory on the feature branch.
-2. Add file → Upload files.
-3. Upload the original PDF and name it `book.pdf`.
-4. Commit the upload to this branch.
-
-Until that binary asset is uploaded, the landing page loads but the embedded reader will not show the book.
+The reader links directly to the uploaded Bengali-named PDF file. Keep the filename unchanged unless the links in `index.html` are updated too.
 
 ## Route
 
