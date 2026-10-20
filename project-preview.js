@@ -2,6 +2,21 @@
 'use strict';
 const grid=document.querySelector('#projects .projects-container');
 if(!grid)return;
+/* Defer screenshot downloads until cards are near the viewport to avoid dozens of simultaneous requests. */
+const previewObserver=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(!entry.isIntersecting)return;
+  const img=entry.target;
+  const src=img.dataset.previewSrc;
+  if(src&&!img.src)img.src=src;
+  previewObserver.unobserve(img);
+ });
+},{rootMargin:'320px 0px',threshold:0.01}):null;
+function deferPreview(img,url){
+ const width=window.matchMedia('(max-width: 680px)').matches?800:1100;
+ img.dataset.previewSrc='https://image.thum.io/get/width/'+width+'/crop/700/noanimate/'+url;
+ if(previewObserver)previewObserver.observe(img);else img.src=img.dataset.previewSrc;
+}
 const style=document.createElement('style');style.textContent=`
 #projects .project-image.live-preview{position:relative!important;height:220px!important;min-height:220px!important;overflow:hidden!important;background:#071018!important;border-radius:14px!important}
 #projects .project-image.live-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;border:0}
@@ -24,7 +39,7 @@ grid.querySelectorAll('.project-card').forEach(card=>{
  image.className='project-image live-preview';
  image.innerHTML='<div class="preview-status">LOADING REAL PROJECT PREVIEW...</div>';
  const img=document.createElement('img');
- img.src='https://image.thum.io/get/width/1200/crop/700/noanimate/'+url;
+ deferPreview(img,url);
  img.alt=title+' — real website screenshot';
  img.loading='lazy';
  img.decoding='async';
@@ -102,7 +117,7 @@ if(bookGrid){
   }
   preview.innerHTML='<div class="book-preview-status">LOADING PREVIEW</div>';
   const img=document.createElement('img');
-  img.src='https://image.thum.io/get/width/1200/crop/760/noanimate/'+url;
+  deferPreview(img,url);
   img.alt=(card.querySelector('h3')?.textContent||'Book')+' website preview';
   img.loading='lazy';
   img.onload=()=>preview.classList.add('loaded');
