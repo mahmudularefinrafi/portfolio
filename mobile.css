@@ -41,9 +41,9 @@
   .project-image,.project-image.live-preview{height:185px!important;min-height:185px!important;width:100%;border-radius:14px 14px 0 0}
 
   /* Always show a useful project preview on mobile. */
-  .project-image.live-preview img{display:none!important}
+  .project-image.live-preview img{display:block!important;position:relative;z-index:0}
   .project-image.live-preview .preview-status{display:flex!important;background:radial-gradient(circle at 35% 25%,rgba(105,170,255,.16),transparent 45%),linear-gradient(135deg,#0d1830,#171333);color:#72b7ff;font:800 10px 'Manrope',sans-serif;letter-spacing:1.5px}
-  .project-image.live-preview.loaded .preview-status{display:flex!important}
+  .project-image.live-preview.loaded .preview-status{display:none!important}
   .project-preview-actions{padding:0 14px 14px!important;gap:7px}
   .project-preview-actions a{min-height:40px;font-size:10px}
   .contact-content{width:100%}
@@ -114,4 +114,33 @@
   header nav .logo { font-size: 18px !important; }
   header nav .nav-tools { gap: 4px !important; }
   header nav .tool-btn { min-width: 31px !important; padding-left: 5px !important; padding-right: 5px !important; font-size: 8px !important; }
+}
+
+
+/* Performance tuning: preserve the visual design while reducing expensive paint work on phones. */
+@media (max-width: 680px), (pointer: coarse) {
+  html { scroll-behavior: auto; }
+  body { background-attachment: scroll !important; }
+  body:before, body:after { animation: none !important; filter: none !important; }
+  header nav, .about-content, .skill-card, .education-card, .project-card,
+  .pro-card, .contact-form-wrap .contact-form, .nav-links.show {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .project-card, .skill-card, .education-card, .about-content, .pro-card,
+  .hero-image, .hero h1, .hero h2, .section-title h2 {
+    animation: none !important;
+    transition-duration: .15s !important;
+  }
+  .project-card:after, .skill-card:after, .about-content:after, .education-card:after {
+    display: none !important;
+  }
+  .project-image.live-preview img, #books .project-image.book-live-preview img {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
