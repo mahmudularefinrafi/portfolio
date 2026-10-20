@@ -93,6 +93,7 @@ if(featuredGrid){
   const link=card.querySelector('.featured-link');
   if(!link)return;
   const url=link.href;
+  const previewUrl=card.dataset.previewUrl||url;
   const title=card.querySelector('h3')?.textContent?.trim()||'Project';
   const preview=document.createElement('div');
   preview.className='featured-preview';
@@ -100,7 +101,7 @@ if(featuredGrid){
   const img=document.createElement('img');
   img.alt=title+' website preview';
   img.loading='lazy';img.decoding='async';
-  deferPreview(img,url);
+  deferPreview(img,previewUrl);
   img.onload=()=>preview.classList.add('loaded');
   img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s)s.textContent='PREVIEW UNAVAILABLE · '+title;};
   preview.appendChild(img);
