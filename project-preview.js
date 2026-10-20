@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 const grid=document.querySelector('#projects .projects-container');
-if(!grid)return;
+
 /* Defer screenshot downloads until cards are near the viewport to avoid dozens of simultaneous requests. */
 const previewObserver=('IntersectionObserver' in window)?new IntersectionObserver(entries=>{
  entries.forEach(entry=>{
@@ -30,6 +30,7 @@ const style=document.createElement('style');style.textContent=`
 @media(max-width:680px){#projects .project-image.live-preview{height:185px!important;min-height:185px!important}#projects .project-preview-actions{padding:0 14px 14px}}
 `;document.head.appendChild(style);
 
+if(grid){
 grid.querySelectorAll('.project-card').forEach(card=>{
  const live=card.querySelector('.project-link');
  const image=card.querySelector('.project-image');
@@ -64,6 +65,51 @@ grid.querySelectorAll('.project-card').forEach(card=>{
  }
  live.style.display='none';
 });
+}
+
+
+
+/* HOMEPAGE: show real website screenshots on featured project cards. */
+const featuredGrid=document.querySelector('#featured-projects .featured-grid');
+if(featuredGrid){
+ const featuredStyle=document.createElement('style');
+ featuredStyle.textContent=`
+ #featured-projects .featured-card{overflow:hidden;padding:0;gap:0}
+ #featured-projects .featured-preview{position:relative;height:190px;min-height:190px;overflow:hidden;background:linear-gradient(135deg,#101d39,#292052);border-bottom:1px solid rgba(150,190,255,.16)}
+ #featured-projects .featured-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .45s ease}
+ #featured-projects .featured-card:hover .featured-preview img{transform:scale(1.035)}
+ #featured-projects .featured-preview-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;color:#c8d8f0;font:700 10px monospace;letter-spacing:1.2px;background:radial-gradient(circle at 50% 25%,rgba(114,183,255,.2),transparent 48%),linear-gradient(135deg,#101d39,#292052)}
+ #featured-projects .featured-preview.loaded .featured-preview-status{display:none}
+ #featured-projects .featured-preview.error .featured-preview-status{display:flex}
+ #featured-projects .featured-content{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:12px;padding:22px 24px 24px}
+ #featured-projects .featured-top{margin-bottom:0}
+ #featured-projects .featured-link{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;min-height:42px;padding:10px 14px;border:1px solid rgba(117,190,255,.4);border-radius:12px;background:rgba(72,139,255,.1);transition:transform .22s,border-color .22s,background .22s}
+ #featured-projects .featured-link:hover{transform:translateY(-2px);border-color:rgba(117,210,255,.85);background:rgba(72,139,255,.2);text-decoration:none}
+ @media(max-width:540px){#featured-projects .featured-preview{height:180px;min-height:180px}#featured-projects .featured-content{padding:19px}}
+ @media(prefers-reduced-motion:reduce){#featured-projects .featured-preview img,#featured-projects .featured-link{transition:none}}
+ `;
+ document.head.appendChild(featuredStyle);
+ featuredGrid.querySelectorAll('.featured-card').forEach(card=>{
+  const link=card.querySelector('.featured-link');
+  if(!link)return;
+  const url=link.href;
+  const title=card.querySelector('h3')?.textContent?.trim()||'Project';
+  const preview=document.createElement('div');
+  preview.className='featured-preview';
+  preview.innerHTML='<div class="featured-preview-status">LOADING PROJECT PREVIEW...</div>';
+  const img=document.createElement('img');
+  img.alt=title+' website preview';
+  img.loading='lazy';img.decoding='async';
+  deferPreview(img,url);
+  img.onload=()=>preview.classList.add('loaded');
+  img.onerror=()=>{preview.classList.add('error');const s=preview.querySelector('.featured-preview-status');if(s)s.textContent='PREVIEW UNAVAILABLE — OPEN PROJECT';};
+  preview.appendChild(img);
+  const content=document.createElement('div');
+  content.className='featured-content';
+  Array.from(card.children).forEach(child=>content.appendChild(child));
+  card.append(preview,content);
+ });
+}
 
 /* BOOKS: real website thumbnails, centered CTA, and whole-card navigation */
 const bookGrid=document.querySelector('#books .projects-container');
